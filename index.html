@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Директорія гостя — Ruta Resort Polyana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================
+       CSS VARIABLES & ROOT STYLES
+    ========================================== */
+    :root {
+      --bg-primary: #0a0a0c;
+      --bg-secondary: #141418;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.06);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --border-glass-hover: rgba(255, 255, 255, 0.15);
+      --text-primary: #f4f4f5;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent: #22c55e;
+      --accent-soft: #16a34a;
+      --accent-glow: rgba(34, 197, 94, 0.15);
+      --accent-glow-strong: rgba(34, 197, 94, 0.25);
+      --purple-glow: rgba(139, 92, 246, 0.08);
+      --blur-glass: 16px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --transition-fast: 0.15s ease;
+      --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.2);
+      --shadow-card-hover: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-primary);
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Mesh Gradient Background */
+    .bg-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(34, 197, 94, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 110%, var(--purple-glow) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(34, 197, 94, 0.03) 0%, transparent 70%);
+    }
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+    .header {
+      position: relative;
+      z-index: 10;
+      padding: 40px 20px 20px;
+      text-align: center;
+    }
+
+    .header_logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .header_logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px var(--accent-glow-strong);
+    }
+
+    .header_logo-icon svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+    }
+
+    .header_title {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header_subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ==========================================
+       SEARCH COMPONENT
+    ========================================== */
+    .search_wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 20px;
+      background: rgba(10, 10, 12, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .search_container {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .search_input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search_icon {
+      position: absolute;
+      left: 18px;
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted);
+      pointer-events: none;
+      transition: color var(--transition-fast);
+    }
+
+    .search_input:focus ~ .search_icon {
+      color: var(--accent);
+    }
+
+    .search_input {
+      width: 100%;
+      padding: 16px 48px 16px 52px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 100px;
+      font-size: 16px;
+      font-family: inherit;
+      color: var(--text-primary);
+      outline: none;
+      transition: all var(--transition-medium);
+    }
+
+    .search_input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search_input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-glow), 0 4px 20px rgba(0,0,0,0.2);
+      background: var(--bg-secondary);
+    }
+
+    .search_clear {
+      position: absolute;
+      right: 14px;
+      width: 28px;
+      height: 28px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      border-radius: 50%;
+      color: var(--text-secondary);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search_clear.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .search_clear:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .search_clear svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ==========================================
+       CATEGORY TABS
+    ========================================== */
+    .category_wrapper {
+      position: relative;
+      z-index: 10;
+    }
+
+    .category_tabs {
+      display: flex;
+      gap: 10px;
+      padding: 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .category_tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category_tab {
+      flex-shrink: 0;
+      padding: 12px 22px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-medium);
+      -webkit-tap-highlight-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category_tab svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    .category_tab:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-glass-hover);
+      color: var(--text-primary);
+    }
+
+    .category_tab.is-active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      box-shadow: 0 4px 20px var(--accent-glow-strong);
+    }
+
+    .category_tab.is-active svg {
+      opacity: 1;
+    }
+
+    .category_tab:active {
+      transform: scale(0.96);
+    }
+
+    /* ==========================================
+       MAIN CONTAINER
+    ========================================== */
+    .directory_container {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 20px 100px;
+    }
+
+    /* ==========================================
+       SECTIONS
+    ========================================== */
+    .directory_section {
+      margin-bottom: 48px;
+    }
+
+    .directory_section.is-hidden {
+      display: none;
+    }
+
+    .section_header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .section_icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-glow);
+      border-radius: var(--radius-md);
+    }
+
+    .section_icon svg {
+      width: 22px;
+      height: 22px;
+      color: var(--accent);
+    }
+
+    .section_title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .section_count {
+      margin-left: auto;
+      padding: 4px 12px;
+      background: var(--bg-card);
+      border-radius: 100px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================
+       GRID
+    ========================================== */
+    .directory_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .directory_grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================
+       CARDS
+    ========================================== */
+    .directory_card {
+      position: relative;
+      background: var(--bg-card);
+      backdrop-filter: blur(var(--blur-glass));
+      -webkit-backdrop-filter: blur(var(--blur-glass));
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      cursor: pointer;
+      transition: all var(--transition-medium);
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .directory_card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .directory_card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-glass-hover);
+      box-shadow: var(--shadow-card-hover);
+      background: var(--bg-card-hover);
+    }
+
+    .directory_card:active {
+      transform: scale(0.98) translateY(-2px);
+    }
+
+    .directory_card.is-hidden {
+      display: none !important;
+    }
+
+    .directory_card.is-included::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    /* Card Header */
+    .card_header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .card_icon-wrapper {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, var(--accent-glow-strong) 100%);
+      border-radius: var(--radius-lg);
+      flex-shrink: 0;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .card_icon {
+      width: 26px;
+      height: 26px;
+      color: var(--accent);
+    }
+
+    .card_title-group {
+      flex: 1;
+      min-width: 0;
+      padding-top: 4px;
+    }
+
+    .card_title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0 0 6px 0;
+      line-height: 1.3;
+    }
+
+    .card_category {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--bg-secondary);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Card Body */
+    .card_description {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* Card Meta */
+    .card_meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-glass);
+    }
+
+    .card_tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--bg-secondary);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .card_tag svg {
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+    }
+
+    .card_tag.is-price {
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    .card_tag.is-price svg {
+      color: var(--accent);
+    }
+
+    /* Expandable Content */
+    .card_expand {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card_expand.is-open {
+      max-height: 600px;
+    }
+
+    .card_expand-content {
+      padding-top: 18px;
+      margin-top: 18px;
+      border-top: 1px solid var(--border-glass);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .card_expand-content ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card_expand-content li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    .card_expand-content li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .card_expand-content strong {
+      color: var(--text-primary);
+    }
+
+    /* Contact Info */
+    .contact_row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+    }
+
+    .contact_row + .contact_row {
+      border-top: 1px solid var(--border-glass);
+    }
+
+    .contact_row svg {
+      width: 18px;
+      height: 18px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .contact_link {
+      font-size: 14px;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .contact_link:hover {
+      color: var(--accent);
+    }
+
+    /* ==========================================
+       NO RESULTS
+    ========================================== */
+    .search_no-results {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .search_no-results.is-visible {
+      display: flex;
+    }
+
+    .no-results_icon {
+      width: 64px;
+      height: 64px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .no-results_title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .no-results_text {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================
+       FOOTER
+    ========================================== */
+    .footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border-glass);
+    }
+
+    .footer_text {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer_text a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ==========================================
+       ANIMATIONS
+    ========================================== */
+    @keyframes haptic-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(0.97); }
+    }
+
+    .is-haptic {
+      animation: haptic-pulse 0.15s ease;
+    }
+
+    /* Stagger animation delays */
+    .directory_card:nth-child(1) { transition-delay: 0ms; }
+    .directory_card:nth-child(2) { transition-delay: 50ms; }
+    .directory_card:nth-child(3) { transition-delay: 100ms; }
+    .directory_card:nth-child(4) { transition-delay: 150ms; }
+    .directory_card:nth-child(5) { transition-delay: 200ms; }
+    .directory_card:nth-child(6) { transition-delay: 250ms; }
+  </style>
+</head>
+<body>
+  <!-- Background Mesh -->
+  <div class="bg-mesh"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header_logo">
+      <div class="header_logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/>
+        </svg>
+      </div>
+      <h1 class="header_title">Ruta Resort Polyana</h1>
+    </div>
+    <p class="header_subtitle">Директорія гостя</p>
+  </header>
+
+  <!-- Search -->
+  <div class="search_wrapper">
+    <div class="search_container">
+      <div class="search_input-wrapper">
+        <input type="text" class="search_input" placeholder="Пошук послуг, сервісів, інформації...">
+        <svg class="search_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+        <button class="search_clear">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="category_wrapper">
+    <div class="category_tabs">
+      <button class="category_tab is-active" data-category="all">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+        Усе
+      </button>
+      <button class="category_tab" data-category="included">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+        Включено
+      </button>
+      <button class="category_tab" data-category="food">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+        Харчування
+      </button>
+      <button class="category_tab" data-category="services">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+        Сервіси
+      </button>
+      <button class="category_tab" data-category="wellness">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
+        Wellness
+      </button>
+      <button class="category_tab" data-category="excursions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 7 6-3 6 3 6-3v13l-6 3-6-3-6 3V7z"/><path d="M9 4v13"/><path d="M15 7v13"/></svg>
+        Екскурсії
+      </button>
+      <button class="category_tab" data-category="rules">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        Правила
+      </button>
+      <button class="category_tab" data-category="contacts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Контакти
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="directory_container">
+    
+    <!-- No Results -->
+    <div class="search_no-results">
+      <svg class="no-results_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M8 8h6"/><path d="M8 11h6"/><path d="M8 14h4"/>
+      </svg>
+      <p class="no-results_title">Нічого не знайдено</p>
+      <p class="no-results_text">Спробуйте змінити пошуковий запит</p>
+    </div>
+
+    <!-- INCLUDED SECTION -->
+    <section class="directory_section" data-section="included">
+      <div class="section_header">
+        <div class="section_icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h2 class="section_title">Включено в проживання</h2>
+      </div>
+      <div class="directory_grid">
+        
+        <!-- Card: Aqua Zone Ozerniy -->
+        <article class="directory_card is-included" data-category="included" data-search="аква зона басейн чани лазня сауна купання озерний">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Аква-зона</h3>
+              <span class="card_category">Корпус Озерний</span>
+            </div>
+          </div>
+          <p class="card_description">Два басейни з підігрівом влітку, купіль взимку, чотири закарпатські чани та лазня цілий рік</p>
+          <div class="card_expand is-open">
+            <div class="card_expand-content">
+              <ul>
+                <li><strong>Літо:</strong> два басейни 10×5м з підігрівом, шезлонги</li>
+                <li><strong>Зима:</strong> басейн-купіль без підігріву</li>
+                <li>Чотири закарпатські чани</li>
+                <li>Лазня — працює цілий рік</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: Aqua Zone Lisoviy -->
+        <article class="directory_card is-included" data-category="included" data-search="аква зона басейн чани лазня сауна інфрачервона лісовий ялиця">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Аква-зона</h3>
+              <span class="card_category">Лісовий / Ялиця</span>
+            </div>
+          </div>
+          <p class="card_description">Критий басейн-купіль, два закарпатські чани, лазня та ІЧ сауна</p>
+        </article>
+
+        <!-- Card: Animation -->
+        <article class="directory_card is-included" data-category="included" data-search="анімація йога аквааеробіка квести діти спорт розваги">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Щоденна анімація</h3>
+              <span class="card_category">Включено</span>
+            </div>
+          </div>
+          <p class="card_description">Програма для всієї родини: йога, аквааеробіка, квести, шоу</p>
+          <div class="card_meta">
+            <span class="card_tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              10:00 - 20:00
+            </span>
+          </div>
+        </article>
+
+        <!-- Card: Kids Club -->
+        <article class="directory_card is-included" data-category="included" data-search="дитячий клуб діти ігри">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h.01"/><path d="M15 12h.01"/><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Дитячий клуб</h3>
+              <span class="card_category">Включено</span>
+            </div>
+          </div>
+          <p class="card_description">Простір для ігор з дітьми під наглядом</p>
+          <div class="card_meta">
+            <span class="card_tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              08:00 - 20:00
+            </span>
+          </div>
+        </article>
+
+        <!-- Card: Transfer -->
+        <article class="directory_card is-included" data-category="included" data-search="трансфер свалява транспорт">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Трансфер Свалява ↔ Готель</h3>
+              <span class="card_category">Безкоштовно</span>
+            </div>
+          </div>
+          <p class="card_description">При поселенні та виїзді. Запишіться заздалегідь на рецепції</p>
+        </article>
+
+        <!-- Card: Parking -->
+        <article class="directory_card is-included" data-category="included" data-search="парковка авто стоянка">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Автостоянка</h3>
+              <span class="card_category">24/7 охорона</span>
+            </div>
+          </div>
+          <p class="card_description">Озерний: 350-400м від території. Лісовий/Ялиця: біля корпусу</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- FOOD SECTION -->
+    <section class="directory_section" data-section="food">
+      <div class="section_header">
+        <div class="section_icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+        </div>
+        <h2 class="section_title">Харчування</h2>
+      </div>
+      <div class="directory_grid">
+
+        <!-- Card: Restaurant -->
+        <article class="directory_card is-included" data-category="food" data-search="ресторан їжа шведський стіл сніданок обід вечеря рута">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Ресторан Ruta</h3>
+              <span class="card_category">Шведський стіл</span>
+            </div>
+          </div>
+          <p class="card_description">Триразове харчування включено в проживання</p>
+          <div class="card_expand is-open">
+            <div class="card_expand-content">
+              <p><strong>Корпус Озерний</strong></p>
+              <p style="margin: 8px 0; font-size: 13px;">Зміна 1: Сніданок 08:00-09:00 | Обід 13:00-13:45 | Вечеря 18:00-18:45</p>
+              <p style="margin: 8px 0 16px; font-size: 13px;">Зміна 2: Сніданок 09:00-10:00 | Обід 13:45-14:30 | Вечеря 18:45-19:30</p>
+              <p><strong>Корпус Лісовий</strong></p>
+              <p style="margin: 8px 0; font-size: 13px;">Сніданок 08:30-10:00 | Обід 13:00-14:30 | Вечеря 18:00-19:30</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: BBQ -->
+        <article class="directory_card is-included" data-category="food" data-search="барбекю бранч гриль">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Барбекю-Бранчі</h3>
+              <span class="card_category">Включено</span>
+            </div>
+          </div>
+          <p class="card_description">Барбекю на свіжому повітрі двічі на тиждень</p>
+          <div class="card_meta">
+            <span class="card_tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+              2 рази на тиждень
+            </span>
+          </div>
+        </article>
+
+        <!-- Card: Cafe -->
+        <article class="directory_card" data-category="food" data-search="кафе кава напої">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Кафе</h3>
+              <span class="card_category">Додатково</span>
+            </div>
+          </div>
+          <p class="card_description">Кава, напої та легкі страви протягом дня</p>
+          <div class="card_meta">
+            <span class="card_tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              08:00 - 21:45
+            </span>
+          </div>
+        </article>
+
+        <!-- Card: Lunch Box -->
+        <article class="directory_card is-included" data-category="food" data-search="ланч бокс екскурсія їжа з собою">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Ланч-бокс</h3>
+              <span class="card_category">Включено</span>
+            </div>
+          </div>
+          <p class="card_description">Їжа з собою при виїзді на екскурсію. Замовте за день на рецепції</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="directory_section" data-section="services">
+      <div class="section_header">
+        <div class="section_icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+        </div>
+        <h2 class="section_title">Сервіси</h2>
+      </div>
+      <div class="directory_grid">
+
+        <!-- Card: WiFi -->
+        <article class="directory_card is-included" data-category="services" data-search="wifi інтернет вайфай">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Wi-Fi</h3>
+              <span class="card_category">Безкоштовно</span>
+            </div>
+          </div>
+          <p class="card_description">Безкоштовний інтернет на всій території готелю</p>
+          <div class="card_expand is-open">
+            <div class="card_expand-content">
+              <p><strong>Мережа:</strong> RutaLovesYou</p>
+              <p style="margin-top: 6px;"><strong>Пароль:</strong> 11115555</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: Reception -->
+        <article class="directory_card is-included" data-category="services" data-search="рецепція допомога виклик бронювання телефон">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Рецепція 24/7</h3>
+              <span class="card_category">Цілодобово</span>
+            </div>
+          </div>
+          <p class="card_description">Допомога з будь-яких питань: ремонт, прибирання, таксі, бронювання</p>
+          <div class="card_expand is-open">
+            <div class="card_expand-content">
+              <div class="contact_row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <a href="tel:+380672657400" class="contact_link">+38 067 265 74 00 (Озерний)</a>
+              </div>
+              <div class="contact_row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <a href="tel:+380675170307" class="contact_link">+38 067 517 03 07 (Лісовий)</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: Housekeeping -->
+        <article class="directory_card is-included" data-category="services" data-search="прибирання білизна покоївка">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Послуги покоївки</h3>
+              <span class="card_category">Включено</span>
+            </div>
+          </div>
+          <p class="card_description">Щоденне вологе прибирання. Заміна білизни кожні 4 дні</p>
+        </article>
+
+        <!-- Card: Conference -->
+        <article class="directory_card" data-category="services" data-search="конференція зала проектор бізнес">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Конференц-зала</h3>
+              <span class="card_category">Додатково</span>
+            </div>
+          </div>
+          <p class="card_description">Зала з проектором та звуком для заходів</p>
+          <div class="card_meta">
+            <span class="card_tag is-price">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              400 грн/год
+            </span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- WELLNESS SECTION -->
+    <section class="directory_section" data-section="wellness">
+      <div class="section_header">
+        <div class="section_icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
+        </div>
+        <h2 class="section_title">Wellness</h2>
+      </div>
+      <div class="directory_grid">
+
+        <!-- Card: Mineral Water -->
+        <article class="directory_card is-included" data-category="wellness" data-search="мінеральна вода бювет лікування поляна">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Бювет мінеральної води</h3>
+              <span class="card_category">Включено</span>
+            </div>
+          </div>
+          <p class="card_description">Цілюща мінеральна вода Поляни. 100-150 мл за прийом, до 3 разів на день</p>
+          <div class="card_meta">
+            <span class="card_tag">Рецепція Озерний</span>
+            <span class="card_tag">Холл Ялиця</span>
+          </div>
+        </article>
+
+        <!-- Card: Vats -->
+        <article class="directory_card is-included" data-category="wellness" data-search="чани закарпатські купання spa">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Закарпатські чани</h3>
+              <span class="card_category">Включено</span>
+            </div>
+          </div>
+          <p class="card_description">Температура 37-40°C. Рекомендований час 15-30 хвилин</p>
+          <div class="card_expand">
+            <div class="card_expand-content">
+              <ul>
+                <li>Розслаблення м'язів, знімає напругу</li>
+                <li>Покращення кровообігу</li>
+                <li>Очищення шкіри</li>
+                <li>Зміцнення імунітету</li>
+              </ul>
+              <p style="margin-top: 12px; font-size: 13px; color: var(--text-muted);"><strong>Протипоказання:</strong> високий тиск, проблеми із серцем, вагітність</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: Medical -->
+        <article class="directory_card" data-category="wellness" data-search="лікування медицина процедури масаж сонячний">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Медичне лікування</h3>
+              <span class="card_category">Медцентр «Сонячний»</span>
+            </div>
+          </div>
+          <p class="card_description">Процедури в партнерському медцентрі (250м). Консультація лікаря включена</p>
+          <div class="card_meta">
+            <span class="card_tag is-price">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              450 грн/день
+            </span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- EXCURSIONS SECTION -->
+    <section class="directory_section" data-section="excursions">
+      <div class="section_header">
+        <div class="section_icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 7 6-3 6 3 6-3v13l-6 3-6-3-6 3V7z"/><path d="M9 4v13"/><path d="M15 7v13"/></svg>
+        </div>
+        <h2 class="section_title">Екскурсії</h2>
+      </div>
+      <div class="directory_grid">
+
+        <!-- Excursion 1 -->
+        <article class="directory_card" data-category="excursions" data-search="синевир водоспад шипіт канатна дорога ведмеді">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Синевир, Шипіт, Канатка</h3>
+              <span class="card_category">Екскурсія #1</span>
+            </div>
+          </div>
+          <p class="card_description">Озеро Синевир • Водоспад Шипіт • Канатна дорога • Центр бурого ведмедя</p>
+          <div class="card_meta">
+            <span class="card_tag is-price">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+              700 грн проїзд
+            </span>
+            <span class="card_tag">+ гід</span>
+          </div>
+        </article>
+
+        <!-- Excursion 2 -->
+        <article class="directory_card" data-category="excursions" data-search="ужгород замок музей">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 9V6c0-1.1-.9-2-2-2H4a2 2 0 0 0-2 2v3"/><path d="M2 12v6c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2v-6"/><path d="M12 4v16"/><path d="M7 4v4"/><path d="M17 4v4"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Ужгород</h3>
+              <span class="card_category">Екскурсія #2</span>
+            </div>
+          </div>
+          <p class="card_description">Замок • Центр міста • Музей «Старе село» • «Деца у нотаря»</p>
+          <div class="card_meta">
+            <span class="card_tag is-price">550 грн проїзд</span>
+            <span class="card_tag">+ гід</span>
+          </div>
+        </article>
+
+        <!-- Excursion 4 -->
+        <article class="directory_card" data-category="excursions" data-search="мукачево замок паланок">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 9V6c0-1.1-.9-2-2-2H4a2 2 0 0 0-2 2v3"/><path d="M2 12v6c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2v-6"/><path d="M12 4v16"/><path d="M7 4v4"/><path d="M17 4v4"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Мукачево</h3>
+              <span class="card_category">Екскурсія #4</span>
+            </div>
+          </div>
+          <p class="card_description">Замок «Паланок» • Прогулянка центром міста</p>
+          <div class="card_meta">
+            <span class="card_tag is-price">350 грн проїзд</span>
+            <span class="card_tag">+ гід</span>
+          </div>
+        </article>
+
+        <!-- Excursion 6 -->
+        <article class="directory_card" data-category="excursions" data-search="лумшори чани сірководневі">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Лумшори — чани</h3>
+              <span class="card_category">Екскурсія #6</span>
+            </div>
+          </div>
+          <p class="card_description">Купання в сірководневих чанах. Пікнік опціонально</p>
+          <div class="card_meta">
+            <span class="card_tag is-price">600 грн з купанням</span>
+            <span class="card_tag">+ гід</span>
+          </div>
+        </article>
+
+        <!-- Excursion 8 -->
+        <article class="directory_card" data-category="excursions" data-search="жайворонок термальні басейни берегово">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Термальні басейни Жайворонок</h3>
+              <span class="card_category">Екскурсія #8</span>
+            </div>
+          </div>
+          <p class="card_description">Термальні басейни, сауни, СПА в Берегово</p>
+          <div class="card_meta">
+            <span class="card_tag is-price">350 грн проїзд</span>
+            <span class="card_tag">вхід 250 грн</span>
+          </div>
+        </article>
+
+        <!-- Excursion 9 -->
+        <article class="directory_card" data-category="excursions" data-search="косино аквапарк сауни">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Косино</h3>
+              <span class="card_category">Екскурсія #9</span>
+            </div>
+          </div>
+          <p class="card_description">Сірководневі джерела • Королівські сауни • Аквапарк</p>
+          <div class="card_meta">
+            <span class="card_tag is-price">450 грн проїзд</span>
+            <span class="card_tag">вхід 700 грн</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- RULES SECTION -->
+    <section class="directory_section" data-section="rules">
+      <div class="section_header">
+        <div class="section_icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h2 class="section_title">Правила</h2>
+      </div>
+      <div class="directory_grid">
+
+        <!-- Card: Hotel Rules -->
+        <article class="directory_card" data-category="rules" data-search="правила заїзд виїзд тиша">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Правила проживання</h3>
+              <span class="card_category">Важливо</span>
+            </div>
+          </div>
+          <p class="card_description">Основні правила перебування в готелі</p>
+          <div class="card_expand is-open">
+            <div class="card_expand-content">
+              <ul>
+                <li><strong>Заїзд:</strong> з 14:00 | <strong>Виїзд:</strong> до 11:00</li>
+                <li><strong>Час тиші:</strong> 22:00 - 08:00</li>
+                <li>Туристичний збір: 40 грн/доба (повнолітні)</li>
+                <li>При втраті ключа: 400 грн, рушника: 600 грн</li>
+                <li>Не залишати дітей без нагляду</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: Fire Safety -->
+        <article class="directory_card" data-category="rules" data-search="пожежа безпека вогонь паління">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Пожежна безпека</h3>
+              <span class="card_category">Важливо</span>
+            </div>
+          </div>
+          <p class="card_description">Запам'ятайте розташування виходів. Паління в номерах заборонено</p>
+        </article>
+
+        <!-- Card: Safe -->
+        <article class="directory_card" data-category="rules" data-search="сейф код безпека">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Інструкція сейфу</h3>
+              <span class="card_category">Інфо</span>
+            </div>
+          </div>
+          <p class="card_description">Закрити: код 3-6 цифр → LOCK. Відкрити: ваш код. Залиште відкритим при виїзді</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CONTACTS SECTION -->
+    <section class="directory_section" data-section="contacts">
+      <div class="section_header">
+        <div class="section_icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h2 class="section_title">Контакти</h2>
+      </div>
+      <div class="directory_grid">
+
+        <!-- Card: Hotel Contacts -->
+        <article class="directory_card" data-category="contacts" data-search="контакти телефон email бронювання">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Контакти готелю</h3>
+              <span class="card_category">Ruta Resort Polyana</span>
+            </div>
+          </div>
+          <div class="card_expand is-open">
+            <div class="card_expand-content" style="padding-top: 0; margin-top: 0; border-top: none;">
+              <div class="contact_row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <a href="tel:+380672657400" class="contact_link">+38 067 265 74 00</a>
+              </div>
+              <div class="contact_row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <a href="tel:0800750300" class="contact_link">0 800 750 300 (бронювання)</a>
+              </div>
+              <div class="contact_row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <a href="mailto:polyana@rutahnr.com" class="contact_link">polyana@rutahnr.com</a>
+              </div>
+              <div class="contact_row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                <a href="https://rutapolyana.com" target="_blank" class="contact_link">rutapolyana.com</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: How to Get -->
+        <article class="directory_card" data-category="contacts" data-search="адреса маршрут дорога поїзд автобус">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Як доїхати</h3>
+              <span class="card_category">Адреса</span>
+            </div>
+          </div>
+          <p class="card_description">Закарпатська обл., Мукачівський р-н, с. Поляна, вул. Курортна 20</p>
+          <div class="card_expand">
+            <div class="card_expand-content">
+              <ul>
+                <li>🚗 Google Maps: bit.ly/rutapolyanamap</li>
+                <li>🚂 Потяг до ст. Свалява</li>
+                <li>🚌 Автобус з Сваляви: «Свалява - Оленево» або «Свалява - Сонячне Закарпаття»</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card: Excursions Booking -->
+        <article class="directory_card" data-category="contacts" data-search="екскурсія бронювання telegram">
+          <div class="card_header">
+            <div class="card_icon-wrapper">
+              <svg class="card_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 7 6-3 6 3 6-3v13l-6 3-6-3-6 3V7z"/><path d="M9 4v13"/><path d="M15 7v13"/></svg>
+            </div>
+            <div class="card_title-group">
+              <h3 class="card_title">Замовити екскурсію</h3>
+              <span class="card_category">Telegram</span>
+            </div>
+          </div>
+          <div class="card_expand is-open">
+            <div class="card_expand-content" style="padding-top: 0; margin-top: 0; border-top: none;">
+              <div class="contact_row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                <a href="https://t.me/Rostii" target="_blank" class="contact_link">t.me/Rostii</a>
+              </div>
+              <div class="contact_row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <a href="tel:+380662616154" class="contact_link">+38 066 261 61 54</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer_text">© 2025 <a href="https://rutapolyana.com">Ruta Resort Polyana</a> · Закарпаття, Україна</p>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // ==========================================
+      // FUZZY SEARCH
+      // ==========================================
+      const fuzzyMatch = (pattern, str) => {
+        pattern = pattern.toLowerCase();
+        str = str.toLowerCase();
+        if (pattern.length === 0) return { match: true, score: 0 };
+        if (str.includes(pattern)) return { match: true, score: 100 };
+        let patternIdx = 0;
+        let score = 0;
+        let consecutiveBonus = 0;
+        for (let i = 0; i < str.length && patternIdx < pattern.length; i++) {
+          if (str[i] === pattern[patternIdx]) {
+            score += 10 + consecutiveBonus;
+            consecutiveBonus += 5;
+            patternIdx++;
+          } else {
+            consecutiveBonus = 0;
+          }
+        }
+        return { match: patternIdx === pattern.length, score };
+      };
+
+      // ==========================================
+      // SEARCH & FILTER
+      // ==========================================
+      const searchInput = document.querySelector('.search_input');
+      const clearBtn = document.querySelector('.search_clear');
+      const cards = document.querySelectorAll('.directory_card');
+      const sections = document.querySelectorAll('.directory_section');
+      const noResults = document.querySelector('.search_no-results');
+      const tabs = document.querySelectorAll('.category_tab');
+      let activeCategory = 'all';
+
+      const filterCards = () => {
+        const query = searchInput.value.trim();
+        let visibleCount = 0;
+        const visibleSections = new Set();
+
+        cards.forEach(card => {
+          const searchable = card.dataset.search || '';
+          const category = card.dataset.category || '';
+          const matchesSearch = query === '' || fuzzyMatch(query, searchable).match;
+          const matchesCategory = activeCategory === 'all' || category === activeCategory;
+
+          if (matchesSearch && matchesCategory) {
+            card.classList.remove('is-hidden');
+            visibleCount++;
+            visibleSections.add(card.closest('.directory_section'));
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+
+        // Show/hide sections
+        sections.forEach(section => {
+          section.classList.toggle('is-hidden', !visibleSections.has(section));
+        });
+
+        clearBtn?.classList.toggle('is-visible', query.length > 0);
+        noResults?.classList.toggle('is-visible', visibleCount === 0);
+      };
+
+      let timeout;
+      searchInput?.addEventListener('input', () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(filterCards, 100);
+      });
+
+      clearBtn?.addEventListener('click', () => {
+        searchInput.value = '';
+        filterCards();
+        searchInput.focus();
+      });
+
+      // Category tabs
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('is-active'));
+          tab.classList.add('is-active');
+          activeCategory = tab.dataset.category || 'all';
+          filterCards();
+          hapticFeedback(tab);
+        });
+      });
+
+      // ==========================================
+      // SCROLL REVEAL
+      // ==========================================
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '50px' });
+
+      cards.forEach(card => observer.observe(card));
+
+      // ==========================================
+      // HAPTIC FEEDBACK
+      // ==========================================
+      const hapticFeedback = (el) => {
+        el.classList.add('is-haptic');
+        setTimeout(() => el.classList.remove('is-haptic'), 150);
+        if ('vibrate' in navigator) navigator.vibrate(10);
+      };
+
+      document.querySelectorAll('.directory_card, .category_tab').forEach(el => {
+        el.addEventListener('touchstart', () => hapticFeedback(el), { passive: true });
+      });
+
+      // ==========================================
+      // EXPANDABLE CARDS
+      // ==========================================
+      cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return;
+          const expand = card.querySelector('.card_expand');
+          if (expand) {
+            expand.classList.toggle('is-open');
+            hapticFeedback(card);
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
