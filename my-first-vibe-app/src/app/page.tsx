@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const COLORS = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7", "#f59e0b"];
+const COLORS = ["#ec4899", "#ef4444", "#22c55e", "#a855f7", "#f59e0b"];
 
 export default function Home() {
   const [colorIndex, setColorIndex] = useState(0);

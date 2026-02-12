@@ -11,9 +11,9 @@ test.describe("Color Button", () => {
     const button = page.getByTestId("color-button");
     const colorDisplay = page.getByTestId("color-display");
 
-    // Початковий колір — синій (#3b82f6)
-    await expect(colorDisplay).toContainText("#3b82f6");
-    await expect(button).toHaveCSS("background-color", "rgb(59, 130, 246)");
+    // Початковий колір — рожевий (#ec4899)
+    await expect(colorDisplay).toContainText("#ec4899");
+    await expect(button).toHaveCSS("background-color", "rgb(236, 72, 153)");
 
     // Клікаємо — колір змінюється на червоний (#ef4444)
     await button.click();
@@ -35,6 +35,6 @@ test.describe("Color Button", () => {
 
     // Ще клік — повертаємось до синього (цикл!)
     await button.click();
-    await expect(colorDisplay).toContainText("#3b82f6");
+    await expect(colorDisplay).toContainText("#ec4899");
   });
 });
