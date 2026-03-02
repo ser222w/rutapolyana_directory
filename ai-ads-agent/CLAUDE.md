@@ -117,3 +117,6 @@ ai-ads-agent/
 - [Встановлення Claude Code](docs/01-installation.md)
 - [Налаштування MCP](docs/02-mcp-setup.md)
 - [Додавання першого акаунту](docs/03-first-account.md)
+- [Гід для CEO](docs/04-user-guide-ceo.md)
+- [Гід для маркетолога](docs/05-user-guide-marketing-manager.md)
+- [Roadmap покращень](docs/06-improvements-roadmap.md)
