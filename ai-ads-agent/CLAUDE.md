@@ -120,3 +120,4 @@ ai-ads-agent/
 - [Гід для CEO](docs/04-user-guide-ceo.md)
 - [Гід для маркетолога](docs/05-user-guide-marketing-manager.md)
 - [Roadmap покращень](docs/06-improvements-roadmap.md)
+- [Інтерфейси для команди (бот, дашборд, порівняння)](docs/07-interface-options.md)
