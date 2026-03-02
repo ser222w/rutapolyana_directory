@@ -1,1 +1,23 @@
 test-results/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Secrets (never commit!)
+.env
+.env*
+*.env
+
+# AI Ads Agent - action history (generated, not for VCS)
+.claude/ads-agent/history/
+
+# Logs
+*.log
+*.tmp

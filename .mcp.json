@@ -7,6 +7,16 @@
     "playwright": {
       "command": "npx",
       "args": ["-y", "@playwright/mcp@latest", "--no-sandbox", "--headless"]
+    },
+    "meta-ads": {
+      "command": "uv",
+      "args": ["run", "--directory", "/path/to/meta-ads-mcp-extended", "meta-ads-mcp"],
+      "env": {
+        "META_APP_ID": "YOUR_META_APP_ID",
+        "META_APP_SECRET": "YOUR_META_APP_SECRET",
+        "META_ACCESS_TOKEN": "YOUR_META_ACCESS_TOKEN",
+        "GEMINI_API_KEY": "YOUR_GEMINI_API_KEY"
+      }
     }
   }
 }
