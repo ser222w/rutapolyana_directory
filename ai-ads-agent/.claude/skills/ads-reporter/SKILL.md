@@ -239,7 +239,7 @@ ads_yesterday = get_insights(object_id="act_XXX", time_range="yesterday", level=
 ### Шаг 1: Подготовка
 
 ```
-1. Прочитай .claude/ads-agent/config/ad_accounts.md
+1. Прочитай config/ad_accounts.md
 2. Прочитай бриф → целевые метрики
 3. Определи период отчета
 ```

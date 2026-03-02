@@ -23,8 +23,8 @@ description: AI-агент для управления Facebook рекламой
 
 ### При любом запросе о рекламе:
 
-1. **Определи аккаунт** - прочитай `.claude/ads-agent/config/ad_accounts.md` чтобы понять какие аккаунты доступны
-2. **Изучи бриф** - прочитай бриф аккаунта из `.claude/ads-agent/config/briefs/{account_name}.md` для понимания целей и ограничений
+1. **Определи аккаунт** - прочитай `config/ad_accounts.md` чтобы понять какие аккаунты доступны
+2. **Изучи бриф** - прочитай бриф аккаунта из `config/briefs/{account_name}.md` для понимания целей и ограничений
 3. **Используй специализированный skill** для задачи:
    - `/ads-optimizer` - анализ и оптимизация (Health Score, бюджеты)
    - `/campaign-manager` - создание и управление кампаниями
@@ -36,7 +36,7 @@ description: AI-агент для управления Facebook рекламой
 
 ### Путь к конфигурации:
 ```
-.claude/ads-agent/
+ai-ads-agent/
 ├── config/
 │   ├── ad_accounts.md      ← список аккаунтов
 │   ├── briefs/             ← брифы по аккаунтам
@@ -113,10 +113,10 @@ description: AI-агент для управления Facebook рекламой
 ## База знаний
 
 Перед принятием решений изучи:
-- `.claude/ads-agent/knowledge/safety_rules.md` - правила безопасности и лимиты
-- `.claude/ads-agent/knowledge/metrics_glossary.md` - формулы и интерпретация метрик
-- `.claude/ads-agent/knowledge/fb_best_practices.md` - best practices Facebook Ads
-- `.claude/ads-agent/knowledge/troubleshooting.md` - решения типичных проблем
+- `config/knowledge/safety_rules.md` - правила безопасности и лимиты
+- `config/knowledge/metrics_glossary.md` - формулы и интерпретация метрик
+- `config/knowledge/fb_best_practices.md` - best practices Facebook Ads
+- `config/knowledge/troubleshooting.md` - решения типичных проблем
 
 ---
 
@@ -126,9 +126,9 @@ description: AI-агент для управления Facebook рекламой
 
 Перед любой оптимизацией читай файлы за последние 3 дня:
 ```
-.claude/ads-agent/history/YYYY-MM/YYYY-MM-DD.md (today)
-.claude/ads-agent/history/YYYY-MM/YYYY-MM-DD.md (yesterday)
-.claude/ads-agent/history/YYYY-MM/YYYY-MM-DD.md (day_before)
+history/YYYY-MM/YYYY-MM-DD.md (today)
+history/YYYY-MM/YYYY-MM-DD.md (yesterday)
+history/YYYY-MM/YYYY-MM-DD.md (day_before)
 ```
 
 ### Зачем это нужно
@@ -183,8 +183,8 @@ description: AI-агент для управления Facebook рекламой
 
 **Действия:**
 1. **Читаю историю** за 3 дня из `history/YYYY-MM/`
-2. Читаю `.claude/ads-agent/config/ad_accounts.md` → нахожу MyBusiness: act_123456789
-3. Читаю `.claude/ads-agent/config/briefs/mybusiness.md` → цели: CPL $3-5, бюджет $50-100
+2. Читаю `config/ad_accounts.md` → нахожу MyBusiness: act_123456789
+3. Читаю `config/briefs/mybusiness.md` → цели: CPL $3-5, бюджет $50-100
 4. Вызываю `/ads-optimizer`
 5. Получаю метрики через `get_campaigns()`, `get_insights()` за 5 периодов
 6. Анализирую по правилам из брифа и knowledge

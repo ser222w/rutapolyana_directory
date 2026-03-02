@@ -73,80 +73,6 @@
 
 ---
 
-## AI Ads Agent Integration
-
-AI-агент для управління Facebook/Instagram рекламою через MCP сервер meta-ads.
-
-### Доступні Skills (12 команд)
-
-| Skill | Команда | Опис |
-|-------|---------|------|
-| Main Agent | `/ads-agent` | Точка входу, оркестрація |
-| Optimizer | `/ads-optimizer` | Health Score, оптимізація бюджетів |
-| Reporter | `/ads-reporter` | Звіти за today/3d/7d/30d |
-| Dashboard | `/dashboard` | Мультиаккаунтна статистика |
-| Campaign Manager | `/campaign-manager` | Створення Campaign→AdSet→Ad |
-| Targeting Expert | `/targeting-expert` | Інтереси, гео, Lookalike |
-| Creative Analyzer | `/creative-analyzer` | Risk Score креативів |
-| Copywriter | `/creative-copywriter` | Тексти для реклами |
-| Image Generator | `/creative-image-generator` | Генерація через Gemini |
-| Account Onboarding | `/account-onboarding` | Додавання нового акаунту |
-| Account Delete | `/account-delete` | Видалення акаунту з конфігу |
-| Naming Rules | `/naming-rules` | Правила найменування |
-
-### Структура файлів
-
-```
-.claude/
-├── skills/                          # 12 Skills (SKILL.md кожний)
-│   ├── ads-agent/
-│   ├── ads-optimizer/
-│   ├── ads-reporter/
-│   ├── dashboard/
-│   ├── campaign-manager/
-│   ├── targeting-expert/
-│   ├── creative-analyzer/
-│   ├── creative-copywriter/
-│   ├── creative-image-generator/
-│   ├── account-onboarding/
-│   ├── account-delete/
-│   └── naming-rules/
-└── ads-agent/                       # Конфігурація агента
-    ├── config/
-    │   ├── AGENT.md                 # Головний конфіг агента
-    │   ├── ad_accounts.md           # Реєстр рекламних акаунтів
-    │   ├── briefs/                  # Брифи по акаунтах
-    │   │   └── _template.md
-    │   ├── creatives.md             # Реєстр креативів (теги)
-    │   ├── creatives/               # Facebook Video/Creative ID
-    │   │   └── README.md
-    │   ├── naming_convention.md     # Правила найменування ads
-    │   └── knowledge/               # База знань
-    │       ├── safety_rules.md
-    │       ├── metrics_glossary.md
-    │       ├── fb_best_practices.md
-    │       ├── geo_locations.md
-    │       └── troubleshooting.md
-    ├── examples/briefs/             # Приклади брифів
-    ├── docs/                        # Документація
-    └── history/                     # Історія дій (auto-generated)
-```
-
-### MCP сервер meta-ads
-
-- **47 tools** для роботи з Facebook Ads API
-- Конфігурація в `.mcp.json` (секція `meta-ads`)
-- Потрібні ENV: `META_APP_ID`, `META_APP_SECRET`, `META_ACCESS_TOKEN`, `GEMINI_API_KEY`
-
-### Перший запуск
-
-1. Заповни `.mcp.json` реальними токенами
-2. Додай акаунт в `.claude/ads-agent/config/ad_accounts.md`
-3. Створи бриф з `_template.md`
-4. Виконай `/dashboard`
-
----
-
 ## Active Priorities
 
 Задачі автоматично сортуються за пріоритетом:
@@ -155,7 +81,7 @@ AI-агент для управління Facebook/Instagram рекламою ч
 - _Немає блокерів_
 
 ### 2. Features (новий функціонал)
-- AI Ads Agent — налаштування та перший запуск
+- _Немає активних фіч_
 
 ### 3. Tech Debt (рефакторинг, доки)
 - _Немає tech debt_
@@ -166,13 +92,13 @@ AI-агент для управління Facebook/Instagram рекламою ч
 
 > **Останнє оновлення:** 2026-03-02
 >
-> **Що робимо:** Налаштування AI Ads Agent для управління Facebook/Instagram рекламою
+> **Що робимо:** Додано AI Ads Agent як окремий проект
 >
-> **Де зупинились:** Встановлено 12 Skills, конфіги, knowledge base, MCP meta-ads сервер
+> **Де зупинились:** ai-ads-agent/ — окремий проект з 12 Skills, конфігами, knowledge base
 >
-> **Наступний крок:** Заповнити .mcp.json реальними токенами, додати перший рекламний акаунт, запустити /dashboard
+> **Наступний крок:** Відкрити ai-ads-agent/ в VS Code, заповнити токени, додати перший акаунт
 >
-> **Контекст:** AI Ads Agent повністю інтегровано. 47 MCP tools для Facebook Ads API. Health Score система оптимізації.
+> **Контекст:** MCP сервери налаштовані. AI Ads Agent винесено в окрему директорію.
 
 ---
 
@@ -181,11 +107,9 @@ AI-агент для управління Facebook/Instagram рекламою ч
 ```
 rutapolyana_directory/
 ├── CLAUDE.md              # Цей файл — мозок проекту
-├── .mcp.json              # MCP сервери (context7, playwright, meta-ads)
+├── .mcp.json              # MCP сервери (context7, playwright)
 ├── .gitignore             # Виключення з git
-├── .claude/
-│   ├── skills/            # 12 Claude Skills для реклами
-│   └── ads-agent/         # Конфіг, knowledge, history
+├── ai-ads-agent/          # AI Ads Agent (окремий проект)
 ├── my-first-vibe-app/     # Тестовий Next.js додаток
 └── index.html             # Landing page
 ```

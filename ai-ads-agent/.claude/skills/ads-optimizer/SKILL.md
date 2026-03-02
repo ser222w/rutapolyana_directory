@@ -17,7 +17,7 @@ description: Эксперт по оптимизации Facebook Ads. Испол
 
 **КРИТИЧНО: Всегда начинай с выбора аккаунта!**
 
-1. Прочитай `.claude/ads-agent/config/ad_accounts.md` → получи список аккаунтов
+1. Прочитай `config/ad_accounts.md` → получи список аккаунтов
 2. Выведи приветствие и список:
 
 ```
@@ -44,9 +44,9 @@ description: Эксперт по оптимизации Facebook Ads. Испол
 
 1. Вычисли даты последних 3 дней
 2. Прочитай файлы истории (если существуют):
-   - `.claude/ads-agent/history/YYYY-MM/YYYY-MM-DD.md` за сегодня
-   - `.claude/ads-agent/history/YYYY-MM/YYYY-MM-DD.md` за вчера
-   - `.claude/ads-agent/history/YYYY-MM/YYYY-MM-DD.md` за позавчера
+   - `history/YYYY-MM/YYYY-MM-DD.md` за сегодня
+   - `history/YYYY-MM/YYYY-MM-DD.md` за вчера
+   - `history/YYYY-MM/YYYY-MM-DD.md` за позавчера
 
 3. Из таблиц действий в истории запомни:
    - Какие adsets/ads менялись за последние 3 дня
@@ -65,10 +65,10 @@ description: Эксперт по оптимизации Facebook Ads. Испол
 ### 3.1 Загрузка брифа и конфигурации
 
 ```
-1. Прочитай .claude/ads-agent/config/briefs/{account_name}.md
+1. Прочитай config/briefs/{account_name}.md
    → Направления, целевые CPL, бюджеты
 
-2. ОБЯЗАТЕЛЬНО прочитай .claude/ads-agent/config/creatives.md
+2. ОБЯЗАТЕЛЬНО прочитай config/creatives.md
    → Реестр креативов с тегами и статусами (active/paused/archived)
    → Запомни список НЕИСПОЛЬЗУЕМЫХ креативов для каждого направления
 ```
@@ -388,7 +388,7 @@ HS = round((CPL_Gap + Trends + Diagnostics + Today_Adj) × Volume_Factor)
 
 **Когда создавать:**
 - Освободился бюджет ≥ $10 (из снижения/паузы)
-- Есть креативы в `.claude/ads-agent/config/creatives.md`
+- Есть креативы в `config/creatives.md`
 - Недобор бюджета по направлению (< 95% от плана)
 
 **Приоритет креативов (основная логика через `/creative-analyzer`):**
@@ -400,7 +400,7 @@ HS = round((CPL_Gap + Trends + Diagnostics + Today_Adj) × Volume_Factor)
 | 3 | **Новые** | Ещё не использовались — для тестирования |
 
 **Fallback (если `/creative-analyzer` недоступен):**
-- Читай `.claude/ads-agent/config/creatives.md` напрямую
+- Читай `config/creatives.md` напрямую
 - Приоритет: новые креативы первыми, остальные по порядку
 
 **ЕСЛИ креативов нет вообще** → перераспредели freed_budget на существующие adsets.
@@ -513,7 +513,7 @@ create_adset(
 
 ## Шаг 12: Логирование в историю
 
-После выполнения действий запиши в `.claude/ads-agent/history/YYYY-MM/YYYY-MM-DD.md`:
+После выполнения действий запиши в `history/YYYY-MM/YYYY-MM-DD.md`:
 
 ```markdown
 ## {время} - Оптимизация {account_name}

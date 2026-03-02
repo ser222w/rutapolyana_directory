@@ -97,7 +97,7 @@ bathroom_cold_audience
 - Первая часть до `_` = **creative_tag** = идентификатор видео/изображения
 - Остальное = любая информация (аудитория, гео, заметки)
 
-**Подробности:** `.claude/ads-agent/config/naming_convention.md`
+**Подробности:** `config/naming_convention.md`
 
 ### Парсинг имени
 
@@ -178,7 +178,7 @@ def aggregate_by_tag(ads_with_insights):
 
 ### Реестр креативов
 
-**Читай:** `.claude/ads-agent/config/creatives.md`
+**Читай:** `config/creatives.md`
 
 При анализе сверяй теги с реестром:
 - Есть ли тег в реестре?

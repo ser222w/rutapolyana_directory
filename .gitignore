@@ -15,8 +15,9 @@ Thumbs.db
 .env*
 *.env
 
-# AI Ads Agent - action history (generated, not for VCS)
-.claude/ads-agent/history/
+# AI Ads Agent - action history and secrets
+ai-ads-agent/.mcp.json
+ai-ads-agent/history/
 
 # Logs
 *.log

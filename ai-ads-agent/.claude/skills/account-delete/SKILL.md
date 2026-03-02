@@ -12,7 +12,7 @@ description: Полное удаление аккаунта и всех связ
 ## Что удаляется
 
 ```
-.claude/ads-agent/config/
+config/
 ├── ad_accounts.md          ← удаляется секция аккаунта
 ├── briefs/{account}.md     ← удаляется файл
 └── naming/{account}_naming.md  ← удаляется файл (если есть)
@@ -28,7 +28,7 @@ description: Полное удаление аккаунта и всех связ
 Какой аккаунт удалить?
 ```
 
-Покажи список из `.claude/ads-agent/config/ad_accounts.md`:
+Покажи список из `config/ad_accounts.md`:
 
 ```
 Доступные аккаунты:
@@ -67,12 +67,12 @@ description: Полное удаление аккаунта и всех связ
 
 1. **Удали бриф:**
    ```bash
-   rm .claude/ads-agent/config/briefs/{account}.md
+   rm config/briefs/{account}.md
    ```
 
 2. **Удали naming rules (если есть):**
    ```bash
-   rm .claude/ads-agent/config/naming/{account}_naming.md
+   rm config/naming/{account}_naming.md
    ```
 
 3. **Удали секцию из ad_accounts.md:**
