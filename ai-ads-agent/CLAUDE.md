@@ -121,3 +121,4 @@ ai-ads-agent/
 - [Гід для маркетолога](docs/05-user-guide-marketing-manager.md)
 - [Roadmap покращень](docs/06-improvements-roadmap.md)
 - [Інтерфейси для команди (бот, дашборд, порівняння)](docs/07-interface-options.md)
+- [ТЗ: Розгортання на VPS (бот + Notion + n8n)](docs/08-vps-deployment-spec.md)
