@@ -5,14 +5,34 @@
 
 ---
 
+## Вибір бота: OpenClaw vs claude-code-telegram
+
+| Критерій | OpenClaw | claude-code-telegram |
+|----------|----------|---------------------|
+| GitHub зірки | 273,000+ | ~1,500 |
+| Мови | TypeScript | Python |
+| Telegram | Нативна підтримка (grammY) | python-telegram-bot |
+| Claude API | Нативно (claude-provider.js) | Claude SDK |
+| MCP | Через MCP Hub skill (1,200+ серверів) | Нативно (ENABLE_MCP=true) |
+| Інші канали | WhatsApp, Discord, Slack, Signal, iMessage, Teams | Тільки Telegram |
+| Skills екосистема | 13,700+ на ClawHub | Немає маркетплейсу |
+| Складність | Легко (1-click deploy) | Середньо (Python setup) |
+| Документація | Відмінна (docs.openclaw.ai) | Добра (README + DO tutorial) |
+
+**Рекомендація:** Почати з **OpenClaw** (простіший старт, більше каналів, величезна спільнота). Якщо потрібна глибша інтеграція з Claude Code SDK — використати **claude-code-telegram**.
+
+Нижче — інструкції для ОБОХ варіантів.
+
+---
+
 ## Загальна архітектура
 
 ```
 ┌────────────────── VPS (Ubuntu 22.04, 4GB RAM) ──────────────────┐
 │                                                                  │
 │  ┌──────────────────────┐    ┌───────────────────────────────┐  │
-│  │  claude-code-telegram │    │  n8n (Docker)                │  │
-│  │  (Telegram Bot)       │    │  Автоматизація:              │  │
+│  │  OpenClaw /           │    │  n8n (Docker)                │  │
+│  │  claude-code-telegram │    │  Автоматизація:              │  │
 │  │                       │    │  • Ранкові звіти → TG        │  │
 │  │  Порт: —              │    │  • Алерти → TG               │  │
 │  │  Процес: systemd      │    │  • Звіти → Notion            │  │
@@ -122,18 +142,7 @@ npm install -g @anthropic-ai/claude-code
 
 ### 1.2 Telegram бот — створення
 
-**Інструмент: [claude-code-telegram](https://github.com/RichardAtCT/claude-code-telegram)**
-
-Це production-ready Telegram бот який:
-- Підключає Claude Code SDK напряму
-- Підтримує MCP (ваші 47 інструментів Facebook Ads)
-- Має сесії для кожного користувача
-- Agentic mode (розмовний) і terminal mode
-- Webhooks для GitHub подій
-- Cron-розклад для автоматичних задач
-- Inline keyboards для зручності
-
-**Задачі:**
+**Спочатку для обох варіантів:**
 ```
 □ Створити Telegram бота через @BotFather:
     1. Відкрити @BotFather в Telegram
@@ -145,15 +154,152 @@ npm install -g @anthropic-ai/claude-code
 □ Отримати Telegram User ID кожного з 4 людей:
     1. Кожен пише @userinfobot
     2. Записати ID (наприклад: 123456789)
+```
 
-□ Встановити бота на VPS:
-    # Як Python пакет (production)
-    pip install git+https://github.com/RichardAtCT/claude-code-telegram@v1.3.0
+---
 
-    # Або з репо (для кастомізації)
-    git clone https://github.com/RichardAtCT/claude-code-telegram.git
-    cd claude-code-telegram
-    make dev
+#### Варіант А: OpenClaw (рекомендовано)
+
+**Інструмент: [OpenClaw](https://github.com/openclaw/openclaw)** — 273K+ зірок, найпопулярніший open-source AI асистент.
+
+**Що це:** Self-hosted AI assistant який працює через Telegram, WhatsApp, Discord, Slack, Signal, iMessage та інші канали. Під капотом використовує Claude API.
+
+**Переваги:**
+- 1-click deploy на VPS ($5/міс достатньо)
+- Нативна підтримка Claude (claude-provider.js)
+- 13,700+ готових skills на ClawHub
+- MCP підтримка через MCP Hub skill
+- Документація: docs.openclaw.ai
+
+**Встановлення на VPS:**
+```bash
+# Клонувати
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+
+# Скопіювати конфіг
+cp .env.example .env
+```
+
+**Конфігурація `.env`:**
+```env
+# === AI Provider ===
+AI_PROVIDER=anthropic
+ANTHROPIC_API_KEY=sk-ant-api03-...ваш_ключ
+AI_MODEL=claude-opus-4-6
+
+# === Telegram ===
+TELEGRAM_ENABLED=true
+TELEGRAM_BOT_TOKEN=7234567890:AAH...ваш_токен
+TELEGRAM_ALLOWED_USERS=111111111,222222222,333333333,444444444
+
+# === MCP (для Meta Ads інструментів) ===
+MCP_ENABLED=true
+MCP_CONFIG_PATH=/home/adsbot/ai-ads-agent/.mcp.json
+```
+
+**Запуск через Docker (рекомендовано):**
+```bash
+# Docker Compose (автозапуск, оновлення)
+docker compose up -d
+
+# Перевірити логи
+docker compose logs -f
+```
+
+**Або через systemd:**
+```bash
+# Встановити залежності
+npm install
+
+# Створити сервіс
+sudo tee /etc/systemd/system/openclaw.service << 'EOF'
+[Unit]
+Description=OpenClaw AI Assistant
+After=network.target
+
+[Service]
+Type=simple
+User=adsbot
+WorkingDirectory=/home/adsbot/openclaw
+EnvironmentFile=/home/adsbot/openclaw/.env
+ExecStart=/usr/bin/node dist/index.js
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable openclaw
+sudo systemctl start openclaw
+```
+
+**Підключення MCP (Meta Ads tools):**
+
+OpenClaw підтримує MCP через MCP Hub skill. Для підключення ваших 47 інструментів meta-ads:
+
+```bash
+# В директорії openclaw, створити mcp-config.json
+cat > mcp-config.json << 'MCPEOF'
+{
+  "mcpServers": {
+    "meta-ads": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/meta-ads-mcp-extended"],
+      "env": {
+        "META_APP_ID": "ваш_app_id",
+        "META_APP_SECRET": "ваш_secret",
+        "META_ACCESS_TOKEN": "ваш_token"
+      }
+    }
+  }
+}
+MCPEOF
+```
+
+**Задачі:**
+```
+□ Клонувати OpenClaw на VPS
+□ Налаштувати .env (Claude API + Telegram)
+□ Підключити MCP з meta-ads інструментами
+□ Запустити через Docker або systemd
+□ Тест: написати боту "Привіт" → має відповісти
+□ Тест: написати "Покажи дашборд" → має використати MCP
+```
+
+**Корисні посилання:**
+- [OpenClaw GitHub](https://github.com/openclaw/openclaw)
+- [Документація](https://docs.openclaw.ai)
+- [Telegram Integration](https://docs.openclaw.ai/channels/telegram)
+- [VPS Hosting Guide](https://docs.openclaw.ai/vps)
+- [MCP Integration](https://gist.github.com/Rapha-btc/527d08acc523d6dcdb2c224fe54f3f39)
+- [Deploy on $5 VPS](https://medium.com/@rentierdigital/i-deployed-my-own-openclaw-ai-agent-in-4-minutes-it-now-runs-my-life-from-a-5-server-8159e6cb41cc)
+
+---
+
+#### Варіант Б: claude-code-telegram (альтернатива)
+
+**Інструмент: [claude-code-telegram](https://github.com/RichardAtCT/claude-code-telegram)** — production-ready Telegram бот з повною інтеграцією Claude Code SDK.
+
+**Коли обрати:** Якщо потрібна глибша інтеграція з Claude Code (сесії, термінальний режим, GitHub webhooks).
+
+**Переваги:**
+- Agentic mode (розмовний) + terminal mode
+- Нативна MCP підтримка (ENABLE_MCP=true)
+- Webhooks для GitHub подій
+- Cron-розклад для автоматичних задач
+- Inline keyboards
+
+**Встановлення на VPS:**
+```bash
+# Як Python пакет (production)
+pip install git+https://github.com/RichardAtCT/claude-code-telegram@v1.3.0
+
+# Або з репо (для кастомізації)
+git clone https://github.com/RichardAtCT/claude-code-telegram.git
+cd claude-code-telegram
+make dev
 ```
 
 **Конфігурація `.env`:**
@@ -164,7 +310,6 @@ TELEGRAM_BOT_USERNAME=ai_ads_agent_bot
 
 # === Доступ (4 людини) ===
 ALLOWED_USERS=111111111,222222222,333333333,444444444
-# CEO,       маркетолог,   контент,    аналітик
 
 # === Claude ===
 ANTHROPIC_API_KEY=sk-ant-api03-...ваш_ключ
@@ -178,7 +323,7 @@ MCP_CONFIG_PATH=/home/adsbot/ai-ads-agent/.mcp.json
 APPROVED_DIRECTORY=/home/adsbot/ai-ads-agent
 ```
 
-**Запуск як systemd сервіс (працює 24/7):**
+**Запуск як systemd сервіс:**
 ```ini
 # /etc/systemd/system/ads-bot.service
 [Unit]
@@ -201,8 +346,12 @@ WantedBy=multi-user.target
 ```bash
 sudo systemctl enable ads-bot
 sudo systemctl start ads-bot
-sudo systemctl status ads-bot  # перевірити
+sudo systemctl status ads-bot
 ```
+
+**Корисні посилання:**
+- [GitHub](https://github.com/RichardAtCT/claude-code-telegram)
+- [DigitalOcean Tutorial](https://www.digitalocean.com/community/tutorials/edit-code-from-telegram)
 
 ---
 
@@ -715,12 +864,26 @@ ROLE_PERMISSIONS = {
 
 ## Джерела
 
+**OpenClaw:**
+- [OpenClaw GitHub (273K+ зірок)](https://github.com/openclaw/openclaw)
+- [OpenClaw Documentation](https://docs.openclaw.ai)
+- [OpenClaw Telegram Integration](https://docs.openclaw.ai/channels/telegram)
+- [OpenClaw VPS Hosting Guide](https://docs.openclaw.ai/vps)
+- [OpenClaw MCP Integration](https://gist.github.com/Rapha-btc/527d08acc523d6dcdb2c224fe54f3f39)
+- [Deploy OpenClaw on $5 VPS](https://medium.com/@rentierdigital/i-deployed-my-own-openclaw-ai-agent-in-4-minutes-it-now-runs-my-life-from-a-5-server-8159e6cb41cc)
+- [Awesome OpenClaw Skills](https://github.com/VoltAgent/awesome-openclaw-skills)
+
+**claude-code-telegram:**
 - [claude-code-telegram (GitHub)](https://github.com/RichardAtCT/claude-code-telegram)
 - [DigitalOcean: Edit Code from Telegram](https://www.digitalocean.com/community/tutorials/edit-code-from-telegram)
+
+**n8n + Notion:**
 - [n8n + Claude + Telegram інтеграція](https://n8n.io/integrations/claude/and/telegram/)
 - [n8n self-hosted Docker setup](https://github.com/flatmarstheory/selfhosted-n8n-telegram-bot)
 - [Notion API Getting Started](https://developers.notion.com/docs/getting-started)
 - [Notion Database Python](https://github.com/minwook-shin/notion-database)
+
+**Telegram Mini App:**
 - [Telegram Mini Apps Documentation](https://core.telegram.org/bots/webapps)
 - [TMA React Template](https://github.com/Telegram-Mini-Apps/reactjs-template)
 - [Telegram UI Kit](https://github.com/telegram-mini-apps-dev/TelegramUI)
