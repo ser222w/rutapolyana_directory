@@ -1,1 +1,24 @@
 test-results/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Secrets (never commit!)
+.env
+.env*
+*.env
+
+# AI Ads Agent - action history and secrets
+ai-ads-agent/.mcp.json
+ai-ads-agent/history/
+
+# Logs
+*.log
+*.tmp
