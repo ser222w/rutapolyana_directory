@@ -661,6 +661,181 @@
     .directory_card:nth-child(4) { transition-delay: 150ms; }
     .directory_card:nth-child(5) { transition-delay: 200ms; }
     .directory_card:nth-child(6) { transition-delay: 250ms; }
+
+    /* ==========================================
+       AI CONNECT BANNER
+    ========================================== */
+    .ai_banner {
+      margin-bottom: 48px;
+      padding: 28px;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, var(--bg-card) 55%);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(var(--blur-glass));
+      -webkit-backdrop-filter: blur(var(--blur-glass));
+      box-shadow: var(--shadow-card);
+    }
+
+    .ai_banner-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .ai_banner-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-glow-strong);
+      border-radius: var(--radius-md);
+    }
+
+    .ai_banner-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--accent);
+    }
+
+    .ai_banner-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .ai_banner-badge {
+      margin-left: 8px;
+      padding: 3px 9px;
+      border-radius: 100px;
+      background: var(--accent-glow-strong);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+
+    .ai_banner-description {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .ai_url-row {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .ai_url {
+      flex: 1 1 280px;
+      min-width: 0;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 14px;
+      color: var(--text-primary);
+      overflow-x: auto;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+    }
+
+    .ai_copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--accent);
+      color: #05140a;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .ai_copy:hover {
+      background: var(--accent-soft);
+    }
+
+    .ai_copy:active {
+      transform: scale(0.97);
+    }
+
+    .ai_copy svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .ai_copy.is-copied {
+      background: var(--accent-soft);
+    }
+
+    .ai_steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .ai_step {
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+    }
+
+    .ai_step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .ai_step ol {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .ai_examples {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .ai_examples strong {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+      .ai_banner {
+        padding: 20px;
+        border-radius: var(--radius-md);
+      }
+
+      .ai_copy {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -747,6 +922,67 @@
       <p class="no-results_text">Спробуйте змінити пошуковий запит</p>
     </div>
 
+    <!-- AI Connect Banner -->
+    <section class="ai_banner" id="ai-connect">
+      <div class="ai_banner-header">
+        <div class="ai_banner-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v2"/><path d="M8 5h8a2 2 0 0 1 2 2v3a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V7a2 2 0 0 1 2-2z"/>
+            <path d="M10 9h.01"/><path d="M14 9h.01"/><path d="M9 21v-4"/><path d="M15 21v-4"/><path d="M3 11v2"/><path d="M21 11v2"/>
+          </svg>
+        </div>
+        <h2 class="ai_banner-title">Бронюйте через свій AI<span class="ai_banner-badge">Beta</span></h2>
+      </div>
+
+      <p class="ai_banner-description">
+        Підключіть готель до свого Claude або ChatGPT — і бронюйте прямо в чаті:
+        асистент сам перевірить вільні номери, актуальні ціни й оформить бронювання.
+      </p>
+
+      <div class="ai_url-row">
+        <code class="ai_url" id="mcp-url">https://mcp.rutapolyana.com/mcp</code>
+        <button class="ai_copy" id="mcp-copy" type="button" aria-label="Скопіювати адресу сервера">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16V4a2 2 0 0 1 2-2h10"/>
+          </svg>
+          <span id="mcp-copy-label">Скопіювати</span>
+        </button>
+      </div>
+
+      <div class="ai_steps">
+        <div class="ai_step">
+          <h3 class="ai_step-title">Claude</h3>
+          <ol>
+            <li>Settings → Connectors</li>
+            <li>Add custom connector</li>
+            <li>Вставте адресу вище</li>
+          </ol>
+        </div>
+        <div class="ai_step">
+          <h3 class="ai_step-title">ChatGPT</h3>
+          <ol>
+            <li>Settings → Connectors</li>
+            <li>Add custom connector</li>
+            <li>Вставте адресу вище</li>
+          </ol>
+        </div>
+        <div class="ai_step">
+          <h3 class="ai_step-title">Що вміє асистент</h3>
+          <ol>
+            <li>Вільні номери й ціни на дати</li>
+            <li>Оформлення бронювання</li>
+            <li>Перевірка та скасування броні</li>
+          </ol>
+        </div>
+      </div>
+
+      <p class="ai_examples">
+        <strong>Спробуйте запитати:</strong> «Знайди номер для двох у Ruta Resort Polyana з 12 по 15 вересня»
+        · «Скільки коштує сімейний номер на вихідні?» · «Перевір моє бронювання RP-1A2B3C4D»
+        <br>
+        Оплата через асистента не проводиться — ви отримаєте код бронювання й посилання на підтвердження.
+      </p>
+    </section>
     <!-- INCLUDED SECTION -->
     <section class="directory_section" data-section="included">
       <div class="section_header">
@@ -1547,6 +1783,46 @@
         });
       });
 
+
+      // ==========================================
+      // AI CONNECT — COPY MCP URL
+      // ==========================================
+      const mcpCopyBtn = document.getElementById('mcp-copy');
+      const mcpUrlEl = document.getElementById('mcp-url');
+      const mcpCopyLabel = document.getElementById('mcp-copy-label');
+
+      const copyMcpUrl = async (text) => {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        // Фолбек для старих браузерів і http-контексту
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      };
+
+      mcpCopyBtn?.addEventListener('click', async () => {
+        const url = mcpUrlEl?.textContent?.trim() || '';
+        try {
+          await copyMcpUrl(url);
+          mcpCopyLabel.textContent = 'Скопійовано';
+          mcpCopyBtn.classList.add('is-copied');
+        } catch {
+          mcpCopyLabel.textContent = 'Скопіюйте вручну';
+        }
+        hapticFeedback(mcpCopyBtn);
+        setTimeout(() => {
+          mcpCopyLabel.textContent = 'Скопіювати';
+          mcpCopyBtn.classList.remove('is-copied');
+        }, 2000);
+      });
     })();
   </script>
 </body>
