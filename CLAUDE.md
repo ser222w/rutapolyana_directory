@@ -90,13 +90,13 @@
 
 ## Current Vibe
 
-> **Останнє оновлення:** 2026-02-12
+> **Останнє оновлення:** 2026-09-25
 >
-> **Що робимо:** Налаштування правил автономності та Decision Matrix
+> **Що робимо:** Керування проєктами сервера cc-ruta (cc.ruta.cam) через Remote Control, без копіювання коду
 >
-> **Де зупинились:** Додано рівні автономії (L1-L3), Fix-it-Yourself Protocol, Active Priorities, оновлено Power Trio
+> **Де зупинились:** Додано `scripts/cc-ruta-remote.sh` і `docs/CC-RUTA-REMOTE.md`, автопідтвердження `defaultMode: auto`
 >
-> **Наступний крок:** Можна починати будувати щось реальне!
+> **Наступний крок:** Запустити скрипт на cc-ruta (одноразово), після чого сесія cc-ruta з'явиться в Claude app
 >
 > **Контекст:** MCP сервери налаштовані. CLAUDE.md з повним workflow. Тестовий додаток працює.
 
@@ -108,6 +108,9 @@
 rutapolyana_directory/
 ├── CLAUDE.md              # Цей файл — мозок проекту
 ├── .mcp.json              # MCP сервери для проекту
+├── .claude/settings.json  # defaultMode: auto (автопідтвердження)
+├── scripts/cc-ruta-remote.sh  # Remote Control для сервера cc-ruta
+├── docs/CC-RUTA-REMOTE.md # Як керувати проєктами cc-ruta звідси
 ├── my-first-vibe-app/     # Тестовий Next.js додаток
 └── ...                    # Твої майбутні проекти
 ```
