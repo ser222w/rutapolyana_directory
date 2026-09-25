@@ -94,9 +94,9 @@
 >
 > **Що робимо:** Керування проєктами сервера cc-ruta (cc.ruta.cam) через Remote Control, без копіювання коду
 >
-> **Де зупинились:** Додано `scripts/cc-ruta-setup.sh`, `scripts/laptop-setup.sh`, `docs/CC-RUTA-REMOTE.md`, автопідтвердження `defaultMode: auto`. З хмарного середовища SSH на сервер недоступний (немає ключа, проксі не пропускає SSH) — запуск робить користувач
+> **Де зупинились:** cc-ruta налаштовано і перевірено: systemd service `cc-remote` запускає `claude remote-control --name cc-ruta --permission-mode auto` (environment env_01WZJ81u7K1bLUgkcMd9Cuwp), VS Code Tunnel працює, на Mac є `ssh cc`, `ccr`, `ccs`
 >
-> **Наступний крок:** Запустити `cc-ruta-setup.sh` на сервері і `laptop-setup.sh` на ноутбуці (команди в docs/CC-RUTA-REMOTE.md)
+> **Наступний крок:** Працювати з проєктами сервера через сесію cc-ruta у Claude app (телефон) або claude.ai/code (ноутбук)
 >
 > **Контекст:** MCP сервери налаштовані. CLAUDE.md з повним workflow. Тестовий додаток працює.
 
