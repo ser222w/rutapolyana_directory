@@ -16,7 +16,7 @@ ssh -t sergiy@cc.ruta.cam 'curl -fsSL https://raw.githubusercontent.com/ser222w/
 - позначає `~` довіреною папкою для Claude Code (без trust-запиту);
 - створює systemd user service **cc-remote** — Remote Control сам стартує після перезавантаження;
 - режим дозволів `auto` (автопідтвердження безпечних дій);
-- налаштовує tmux під телефон (миша, великий history);
+- tmux не чіпає, якщо `~/.tmux.conf` вже є;
 - показує статус Remote Control і VS Code Tunnel.
 
 ## 2. Ноутбук — одна команда

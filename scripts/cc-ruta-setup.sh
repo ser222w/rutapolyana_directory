@@ -8,7 +8,7 @@
 #   2. Позначає робочу папку як довірену для Claude Code (щоб не питав trust)
 #   3. Створює systemd user service cc-remote — Remote Control стартує сам
 #      після перезавантаження, живе в tmux-сесії cc-remote
-#   4. Зручний tmux для телефона (миша, великий history)
+#   4. Зручний tmux для телефона — тільки якщо ~/.tmux.conf ще немає
 #   5. Показує статус: Remote Control, VS Code Tunnel, lingering
 
 set -euo pipefail
@@ -70,7 +70,9 @@ else
 fi
 
 echo "== 5. tmux для телефона"
-if ! grep -q "cc-ruta-setup" ~/.tmux.conf 2>/dev/null; then
+if [ -f ~/.tmux.conf ]; then
+  ok "$HOME/.tmux.conf вже є — не чіпаю"
+else
   cat >> ~/.tmux.conf <<'TMUX'
 # --- cc-ruta-setup ---
 set -g mouse on
@@ -79,9 +81,7 @@ set -g default-terminal "tmux-256color"
 setw -g aggressive-resize on
 TMUX
   tmux source-file ~/.tmux.conf 2>/dev/null || true
-  ok "додано ~/.tmux.conf"
-else
-  ok "вже налаштовано"
+  ok "створено $HOME/.tmux.conf"
 fi
 
 echo "== 6. Статус"
