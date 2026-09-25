@@ -85,10 +85,10 @@ TMUX
 fi
 
 echo "== 6. Статус"
-sleep 5
+sleep 10
 if tmux has-session -t cc-remote 2>/dev/null; then
   ok "Remote Control працює (tmux: cc-remote)"
-  tmux capture-pane -pt cc-remote | grep -v '^$' | tail -5 | sed 's/^/     /'
+  tmux capture-pane -pt cc-remote | grep -v '^$' | tail -5 | sed 's/^/     /' || true
 else
   warn "Remote Control не запустився: journalctl --user -u cc-remote -n 30"
 fi
