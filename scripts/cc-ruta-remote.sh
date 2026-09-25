@@ -20,10 +20,18 @@ CC_DIR="${CC_DIR:-$HOME}"
 CC_MODE="${CC_MODE:-auto}"
 CC_SPAWN="${CC_SPAWN:-same-dir}"
 
+# Якщо встановлено через cc-ruta-setup.sh — керуємо через systemd
+UNIT="$HOME/.config/systemd/user/cc-remote.service"
+
 case "${1:-start}" in
   start)
     if tmux has-session -t "$SESSION" 2>/dev/null; then
       echo "Вже працює. Подивитись: bash $0 attach"
+      exit 0
+    fi
+    if [ -f "$UNIT" ]; then
+      systemctl --user start cc-remote.service
+      echo "Запущено через systemd (cc-remote)."
       exit 0
     fi
     tmux new-session -d -s "$SESSION" -c "$CC_DIR" \
@@ -35,6 +43,7 @@ case "${1:-start}" in
     tmux attach -t "$SESSION"
     ;;
   stop)
+    [ -f "$UNIT" ] && systemctl --user stop cc-remote.service 2>/dev/null
     tmux kill-session -t "$SESSION" 2>/dev/null && echo "Зупинено." || echo "Не було запущено."
     ;;
   status)

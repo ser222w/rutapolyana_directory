@@ -94,9 +94,9 @@
 >
 > **Що робимо:** Керування проєктами сервера cc-ruta (cc.ruta.cam) через Remote Control, без копіювання коду
 >
-> **Де зупинились:** Додано `scripts/cc-ruta-remote.sh` і `docs/CC-RUTA-REMOTE.md`, автопідтвердження `defaultMode: auto`
+> **Де зупинились:** Додано `scripts/cc-ruta-setup.sh`, `scripts/laptop-setup.sh`, `docs/CC-RUTA-REMOTE.md`, автопідтвердження `defaultMode: auto`. З хмарного середовища SSH на сервер недоступний (немає ключа, проксі не пропускає SSH) — запуск робить користувач
 >
-> **Наступний крок:** Запустити скрипт на cc-ruta (одноразово), після чого сесія cc-ruta з'явиться в Claude app
+> **Наступний крок:** Запустити `cc-ruta-setup.sh` на сервері і `laptop-setup.sh` на ноутбуці (команди в docs/CC-RUTA-REMOTE.md)
 >
 > **Контекст:** MCP сервери налаштовані. CLAUDE.md з повним workflow. Тестовий додаток працює.
 
@@ -109,7 +109,10 @@ rutapolyana_directory/
 ├── CLAUDE.md              # Цей файл — мозок проекту
 ├── .mcp.json              # MCP сервери для проекту
 ├── .claude/settings.json  # defaultMode: auto (автопідтвердження)
-├── scripts/cc-ruta-remote.sh  # Remote Control для сервера cc-ruta
+├── scripts/
+│   ├── cc-ruta-setup.sh   # Одноразове налаштування сервера cc-ruta (systemd, trust, tmux)
+│   ├── cc-ruta-remote.sh  # Керування Remote Control сесією на сервері
+│   └── laptop-setup.sh    # SSH config + aliases (ssh cc, ccr, ccs) для ноутбука
 ├── docs/CC-RUTA-REMOTE.md # Як керувати проєктами cc-ruta звідси
 ├── my-first-vibe-app/     # Тестовий Next.js додаток
 └── ...                    # Твої майбутні проекти
