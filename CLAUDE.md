@@ -90,13 +90,13 @@
 
 ## Current Vibe
 
-> **Останнє оновлення:** 2026-02-12
+> **Останнє оновлення:** 2026-09-25
 >
-> **Що робимо:** Налаштування правил автономності та Decision Matrix
+> **Що робимо:** Керування проєктами сервера cc-ruta (cc.ruta.cam) через Remote Control, без копіювання коду
 >
-> **Де зупинились:** Додано рівні автономії (L1-L3), Fix-it-Yourself Protocol, Active Priorities, оновлено Power Trio
+> **Де зупинились:** cc-ruta налаштовано і перевірено: systemd service `cc-remote` запускає `claude remote-control --name cc-ruta --permission-mode auto` (environment env_01WZJ81u7K1bLUgkcMd9Cuwp), VS Code Tunnel працює, на Mac є `ssh cc`, `ccr`, `ccs`
 >
-> **Наступний крок:** Можна починати будувати щось реальне!
+> **Наступний крок:** Працювати з проєктами сервера через сесію cc-ruta у Claude app (телефон) або claude.ai/code (ноутбук)
 >
 > **Контекст:** MCP сервери налаштовані. CLAUDE.md з повним workflow. Тестовий додаток працює.
 
@@ -108,6 +108,12 @@
 rutapolyana_directory/
 ├── CLAUDE.md              # Цей файл — мозок проекту
 ├── .mcp.json              # MCP сервери для проекту
+├── .claude/settings.json  # defaultMode: auto (автопідтвердження)
+├── scripts/
+│   ├── cc-ruta-setup.sh   # Одноразове налаштування сервера cc-ruta (systemd, trust, tmux)
+│   ├── cc-ruta-remote.sh  # Керування Remote Control сесією на сервері
+│   └── laptop-setup.sh    # SSH config + aliases (ssh cc, ccr, ccs) для ноутбука
+├── docs/CC-RUTA-REMOTE.md # Як керувати проєктами cc-ruta звідси
 ├── my-first-vibe-app/     # Тестовий Next.js додаток
 └── ...                    # Твої майбутні проекти
 ```
